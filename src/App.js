@@ -9,7 +9,11 @@ function App() {
   const addList = (event) => {
     event.preventDefault();
     setList(list);
-    setLists(lists.concat(list));
+    const newList = {
+      id: lists.length + 1,
+      name: list
+    }
+    setLists(lists.concat(newList));
     setList('');
   }
 
@@ -18,6 +22,8 @@ function App() {
   }
 
   const deleteList = (index) => {
+    const a = lists.filter(list => list.id !== index);
+    setLists(a);
     console.log(index);
   }
 

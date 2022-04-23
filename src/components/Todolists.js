@@ -5,8 +5,8 @@ const Todolists =  (props) => {
         <div>
             <ul>
                 {
-                    props.lists.map((list,index) => (
-                        <li key={index}>{list}<input type='button' onClick={() => props.delete(index)} value='Delete' /></li>
+                    props.lists.map((list) => (
+                        <li key={list.id}>{list.name}<input type='button' onClick={() => props.delete(list.id)} value='Delete' /></li>
                     ))
                 }
             </ul>
