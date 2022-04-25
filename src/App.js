@@ -1,19 +1,24 @@
 import React, {useState} from 'react';
 import AddList from './components/AddList';
 import Todolists from './components/Todolists';
+import { useSelector, useDispatch } from 'react-redux';
+import { addList, deleteList } from './redux/listSlice';
 
 function App() {
-  const [list, setList] = useState();
-  const [lists, setLists] = useState([]);
+  const [list, setList] = useState('');
+  //const [lists, setLists] = useState([]);
+  const lists = useSelector(state => state.lists);
+  const dispatch = useDispatch();
 
-  const addList = (event) => {
+  const generateId = () => Number((Math.random() * 100000).toFixed(0))
+
+  const addingList = (event) => {
     event.preventDefault();
-    setList(list);
     const newList = {
-      id: lists.length + 1,
+      id: generateId(),
       name: list
     }
-    setLists(lists.concat(newList));
+    dispatch(addList(newList));
     setList('');
   }
 
@@ -21,16 +26,16 @@ function App() {
     setList(event.target.value);
   }
 
-  const deleteList = (index) => {
+  const deletingList = (index) => {
     const a = lists.filter(list => list.id !== index);
-    setLists(a);
-    console.log(index);
+    dispatch(deleteList(a))
+    //console.log(index);
   }
 
   return (
     <div className="App">
-      <AddList add={addList} list={list} onChange={handleChange}/>
-      <Todolists lists = {lists} delete={deleteList}/>
+      <AddList add={addingList} list={list} onChange={handleChange}/>
+      <Todolists lists = {lists} delete={deletingList}/>
     </div>
   );
 }
